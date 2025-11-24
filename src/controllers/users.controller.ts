@@ -1,11 +1,17 @@
-import { Request, Response } from "express";
 
-let id = 0;
-type User = { id: number; nome: string; idade: number; email: string }
+import { Request, Response } from "express";
+import { getFirestore } from "firebase-admin/firestore";
+
+
+type User = { id: number; nome: string; email: string };
 let users: User[] = [];
 
 export class UsersController {
-    static getAll(req: Request, res: Response) {
+    static async getAll(req: Request, res: Response) {
+        const snapshot = await getFirestore().collection("users").get();
+        const users = snapshot.docs.map(doc => {
+            return doc.data() as User;
+        });
         res.send(users);
     }
 
@@ -24,12 +30,11 @@ export class UsersController {
         }
     }
 
-    static save(req: Request, res: Response) {
+    static async save(req: Request, res: Response) {
         let user = req.body;
-        user.id = id++;
-        users.push(user);
+        await getFirestore().collection("users").add(user);
         res.send({
-            message: "Usuario cadastrado"
+            message: "Usuario  cadastrado"
         });
     }
 
@@ -39,7 +44,6 @@ export class UsersController {
         const index = users.findIndex(u => u.id === id);
 
         users[index].nome = userUpdate.nome;
-        users[index].idade = userUpdate.idade;
         users[index].email = userUpdate.email;
         res.status(200).send("Usuário atualizado");
     }

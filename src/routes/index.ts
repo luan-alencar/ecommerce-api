@@ -4,4 +4,5 @@ import { userRoutes } from "./users.route.js";
 
 export const routes = (app: express.Express) => {
     app.use(userRoutes);
+    app.use(express.json());
 }
