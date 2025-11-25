@@ -2,7 +2,6 @@
 import { Request, Response } from "express";
 import { getFirestore } from "firebase-admin/firestore";
 
-
 type User = { id: number; nome: string; email: string };
 let users: User[] = [];
 
@@ -10,22 +9,42 @@ export class UsersController {
     static async getAll(req: Request, res: Response) {
         const snapshot = await getFirestore().collection("users").get();
         const users = snapshot.docs.map(doc => {
-            return doc.data() as User;
+            return {
+                id: doc.id,
+                ...doc.data()
+            };
         });
         res.send(users);
     }
 
-    static getById(req: Request, res: Response) {
-        let userID = Number(req.params.id);
-        let user = users.find(user => user.id === userID);
-        if (user !== null) {
+    static async getById(req: Request, res: Response) {
+        try {
+            const userID = req.params.id;
+
+            const doc = await getFirestore()
+                .collection("users")
+                .doc(userID)
+                .get();
+
+            if (!doc.exists) {
+                return res.status(404).json({
+                    message: "Usuário não encontrado."
+                });
+            }
+
+            const user = {
+                id: doc.id,
+                ...doc.data()
+            };
+
             return res.status(200).json({
                 message: "Usuário encontrado!",
                 user
             });
-        } else {
-            return res.status(404).json({
-                message: "Usuario não encontrado"
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao buscar usuário"
             });
         }
     }
@@ -38,14 +57,34 @@ export class UsersController {
         });
     }
 
-    static update(req: Request, res: Response) {
-        let id = Number(req.params.id)
-        const userUpdate = req.body;
-        const index = users.findIndex(u => u.id === id);
+    static async update(req: Request, res: Response) {
+        try {
+            const userID = req.params.id;
+            const user = req.body as User;
 
-        users[index].nome = userUpdate.nome;
-        users[index].email = userUpdate.email;
-        res.status(200).send("Usuário atualizado");
+            const db = getFirestore();
+            const docRef = db.collection("users").doc(userID);
+
+            const doc = await docRef.get();
+
+            if (!doc.exists) {
+                return res.status(404).json({
+                    message: "Usuário não encontrado"
+                });
+            }
+
+            await docRef.update({
+                nome: user.nome,
+                email: user.email
+            });
+
+            return res.status(200).send({ message: "Usuário atualizado" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao atualizar usuário"
+            });
+        }
     }
 
     static remove(req: Request, res: Response) {
