@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { getFirestore } from "firebase-admin/firestore";
 
 type User = { id: number; nome: string; email: string };
-let users: User[] = [];
 
 export class UsersController {
     static async getAll(req: Request, res: Response) {
@@ -87,13 +86,12 @@ export class UsersController {
         }
     }
 
-    static remove(req: Request, res: Response) {
-        const index = users.findIndex(u => u.id === Number(req.params.id));
-        users.splice(index, 1);
+    static async remove(req: Request, res: Response) {
+        let userID = req.params.id;
+        await getFirestore().collection("users").doc(userID).delete();
         return res.status(200)
             .json({
-                message: "Usuário removido com sucesso!",
-                users
+                message: "Usuário removido com sucesso!"
             });
     }
 }
