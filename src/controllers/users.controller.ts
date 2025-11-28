@@ -8,6 +8,7 @@ export class UsersController {
     static async getAll(req: Request, res: Response) {
         const snapshot = await getFirestore().collection("users").get();
         const users = snapshot.docs.map(doc => {
+            throw new Error("Erro ao converter documentos");
             return {
                 id: doc.id,
                 ...doc.data()
@@ -51,7 +52,7 @@ export class UsersController {
     static async save(req: Request, res: Response) {
         let user = req.body;
         await getFirestore().collection("users").add(user);
-        res.send({
+        res.status(201).send({
             message: "Usuario  cadastrado"
         });
     }
@@ -89,9 +90,6 @@ export class UsersController {
     static async remove(req: Request, res: Response) {
         let userID = req.params.id;
         await getFirestore().collection("users").doc(userID).delete();
-        return res.status(200)
-            .json({
-                message: "Usuário removido com sucesso!"
-            });
+        return res.status(204).end();
     }
 }

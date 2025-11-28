@@ -1,8 +1,22 @@
-// VAI ORQUESTRAR TODAS AS ROTAS
 import express from "express";
-import { userRoutes } from "./users.route.js";
+import { Express } from "express-serve-static-core";
+import { errorHandler } from "../middlewares/errorHandler.js";
 
-export const routes = (app: express.Express) => {
-    app.use(userRoutes);
-    app.use(express.json());
+
+const app = express();
+
+app.use(express.json());
+
+// suas rotas
+routes(app);
+
+// SEMPRE depois das rotas:
+app.use(errorHandler);
+
+app.listen(3000, () => {
+  console.log("Servidor rodando na porta 3000");
+});
+function routes(app: Express) {
+    throw new Error("Function not implemented.");
 }
+
