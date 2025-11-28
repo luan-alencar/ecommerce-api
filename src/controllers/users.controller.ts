@@ -1,95 +1,160 @@
-
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { getFirestore } from "firebase-admin/firestore";
+import { ApiError } from "../errors/ApiError.js";
 
-type User = { id: number; nome: string; email: string };
+type UserDTO = {
+    nome: string;
+    email: string;
+};
 
 export class UsersController {
-    static async getAll(req: Request, res: Response) {
-        const snapshot = await getFirestore().collection("users").get();
-        const users = snapshot.docs.map(doc => {
-            throw new Error("Erro ao converter documentos");
-            return {
+    // GET /users
+    static async getAll(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
+            const snapshot = await getFirestore().collection("users").get();
+
+            const users = snapshot.docs.map((doc) => ({
                 id: doc.id,
-                ...doc.data()
-            };
-        });
-        res.send(users);
+                ...doc.data(),
+            }));
+
+            res.status(200).json(users);
+        } catch (error) {
+            next(new ApiError("Erro ao buscar usuários", 500));
+        }
     }
 
-    static async getById(req: Request, res: Response) {
+    // GET /users/:id
+    static async getById(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
         try {
             const userID = req.params.id;
 
-            const doc = await getFirestore()
-                .collection("users")
-                .doc(userID)
-                .get();
+            if (!userID) {
+                throw new ApiError("ID do usuário é obrigatório.", 400);
+            }
+
+            const doc = await getFirestore().collection("users").doc(userID).get();
 
             if (!doc.exists) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                });
+                throw new ApiError("Usuário não encontrado.", 404);
             }
 
             const user = {
                 id: doc.id,
-                ...doc.data()
+                ...doc.data(),
             };
 
-            return res.status(200).json({
+            res.status(200).json({
                 message: "Usuário encontrado!",
-                user
+                user,
             });
         } catch (error) {
-            console.error(error);
-            return res.status(500).json({
-                message: "Erro ao buscar usuário"
-            });
+            next(error);
         }
     }
 
-    static async save(req: Request, res: Response) {
-        let user = req.body;
-        await getFirestore().collection("users").add(user);
-        res.status(201).send({
-            message: "Usuario  cadastrado"
-        });
+    // POST /users
+    static async save(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
+            const body = req.body as UserDTO;
+
+            if (!body || !body.nome || !body.email) {
+                throw new ApiError("Campos nome e email são obrigatórios.", 400);
+            }
+
+            const db = getFirestore();
+
+            const docRef = await db.collection("users").add({
+                nome: body.nome,
+                email: body.email,
+            });
+
+            res.status(201).json({
+                message: "Usuário cadastrado com sucesso!",
+                id: docRef.id,
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 
-    static async update(req: Request, res: Response) {
+    // PUT /users/:id
+    static async update(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
         try {
             const userID = req.params.id;
-            const user = req.body as User;
+            const body = req.body as UserDTO;
+
+            if (!userID) {
+                throw new ApiError("ID do usuário é obrigatório.", 400);
+            }
+
+            if (!body || !body.nome || !body.email) {
+                throw new ApiError("Campos nome e email são obrigatórios.", 400);
+            }
 
             const db = getFirestore();
             const docRef = db.collection("users").doc(userID);
-
             const doc = await docRef.get();
 
             if (!doc.exists) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado"
-                });
+                throw new ApiError("Usuário não encontrado.", 404);
             }
 
             await docRef.update({
-                nome: user.nome,
-                email: user.email
+                nome: body.nome,
+                email: body.email,
             });
 
-            return res.status(200).send({ message: "Usuário atualizado" });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({
-                message: "Erro ao atualizar usuário"
+            res.status(200).json({
+                message: "Usuário atualizado com sucesso!",
             });
+        } catch (error) {
+            next(error);
         }
     }
 
-    static async remove(req: Request, res: Response) {
-        let userID = req.params.id;
-        await getFirestore().collection("users").doc(userID).delete();
-        return res.status(204).end();
+    // DELETE /users/:id
+    static async remove(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
+            const userID = req.params.id;
+
+            if (!userID) {
+                throw new ApiError("ID do usuário é obrigatório.", 400);
+            }
+
+            const db = getFirestore();
+            const docRef = db.collection("users").doc(userID);
+            const doc = await docRef.get();
+
+            if (!doc.exists) {
+                throw new ApiError("Usuário não encontrado.", 404);
+            }
+
+            await docRef.delete();
+
+            res.status(204).send(); // No Content
+        } catch (error) {
+            next(error);
+        }
     }
 }

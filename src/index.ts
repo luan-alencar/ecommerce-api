@@ -1,13 +1,21 @@
-import express from "express";
+import express, { Express } from "express";
 import { initializeApp } from "firebase-admin/app";
+import { errorHandler } from "./middlewares/errorHandler.js";
 import { routes } from "./routes/index.js";
 
 initializeApp();
-const app = express();
+
+const app: Express = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 
+// registra todas as rotas
 routes(app);
 
-app.listen(3000, () => {
-    console.log('O servidor esta rodando na porta 3000');
+// middleware global de erros – sempre por último
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log(`O servidor esta rodando na porta ${PORT}`);
 });
