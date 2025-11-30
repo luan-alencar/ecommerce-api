@@ -34,31 +34,27 @@ export class UsersController {
         res: Response,
         next: NextFunction
     ): Promise<void> {
-        try {
-            const userID = req.params.id;
+        const userID = req.params.id;
 
-            if (!userID) {
-                throw new ApiError("ID do usuário é obrigatório.", 400);
-            }
-
-            const doc = await getFirestore().collection("users").doc(userID).get();
-
-            if (!doc.exists) {
-                throw new ApiError("Usuário não encontrado.", 404);
-            }
-
-            const user = {
-                id: doc.id,
-                ...doc.data(),
-            };
-
-            res.status(200).json({
-                message: "Usuário encontrado!",
-                user,
-            });
-        } catch (error) {
-            next(error);
+        if (!userID) {
+            throw new ApiError("ID do usuário é obrigatório.", 400);
         }
+
+        const doc = await getFirestore().collection("users").doc(userID).get();
+
+        if (!doc.exists) {
+            throw new ApiError("Usuário não encontrado.", 404);
+        }
+
+        const user = {
+            id: doc.id,
+            ...doc.data(),
+        };
+
+        res.status(200).json({
+            message: "Usuário encontrado!",
+            user,
+        });
     }
 
     // POST /users
