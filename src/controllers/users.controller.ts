@@ -1,156 +1,36 @@
 import { NextFunction, Request, Response } from "express";
 import { getFirestore } from "firebase-admin/firestore";
 import { ApiError } from "../errors/ApiError.js";
-
-type UserDTO = {
-    nome: string;
-    email: string;
-};
+import { User } from "../models/user.model.js";
+import { UserService } from "../services/user.service.js";
 
 export class UsersController {
+
     // GET /users
-    static async getAll(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
-        try {
-            const snapshot = await getFirestore().collection("users").get();
-
-            const users = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-
-            res.status(200).json(users);
-        } catch (error) {
-            next(new ApiError("Erro ao buscar usuários", 500));
-        }
+    static async getAll(req: Request, res: Response, next: NextFunction) {
+        res.send(await new UserService().getAll());
     }
 
     // GET /users/:id
-    static async getById(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
-        const userID = req.params.id;
-
-        if (!userID) {
-            throw new ApiError("ID do usuário é obrigatório.", 400);
-        }
-
-        const doc = await getFirestore().collection("users").doc(userID).get();
-
-        if (!doc.exists) {
-            throw new ApiError("Usuário não encontrado.", 404);
-        }
-
-        const user = {
-            id: doc.id,
-            ...doc.data(),
-        };
-
-        res.status(200).json({
-            message: "Usuário encontrado!",
-            user,
-        });
+    static async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
+        res.send(await new UserService().getById(req.params.id))
     }
 
     // POST /users
-    static async save(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
-        try {
-            const body = req.body as UserDTO;
-
-            if (!body || !body.nome || !body.email) {
-                throw new ApiError("Campos nome e email são obrigatórios.", 400);
-            }
-
-            const db = getFirestore();
-
-            const docRef = await db.collection("users").add({
-                nome: body.nome,
-                email: body.email,
-            });
-
-            res.status(201).json({
-                message: "Usuário cadastrado com sucesso!",
-                id: docRef.id,
-            });
-        } catch (error) {
-            next(error);
-        }
+    static async save(req: Request, res: Response, next: NextFunction): Promise<void> {
+        res.status(201).send(await new UserService().save(req.body));
     }
 
     // PUT /users/:id
-    static async update(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
-        try {
-            const userID = req.params.id;
-            const body = req.body as UserDTO;
-
-            if (!userID) {
-                throw new ApiError("ID do usuário é obrigatório.", 400);
-            }
-
-            if (!body || !body.nome || !body.email) {
-                throw new ApiError("Campos nome e email são obrigatórios.", 400);
-            }
-
-            const db = getFirestore();
-            const docRef = db.collection("users").doc(userID);
-            const doc = await docRef.get();
-
-            if (!doc.exists) {
-                throw new ApiError("Usuário não encontrado.", 404);
-            }
-
-            await docRef.update({
-                nome: body.nome,
-                email: body.email,
-            });
-
-            res.status(200).json({
-                message: "Usuário atualizado com sucesso!",
-            });
-        } catch (error) {
-            next(error);
-        }
+    static async update(req: Request, res: Response, next: NextFunction): Promise<void> {
+        let userID = req.params.id;
+        let user = req.body as User;
+        res.send(await new UserService().update(userID, user));
     }
 
     // DELETE /users/:id
-    static async remove(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
-        try {
-            const userID = req.params.id;
-
-            if (!userID) {
-                throw new ApiError("ID do usuário é obrigatório.", 400);
-            }
-
-            const db = getFirestore();
-            const docRef = db.collection("users").doc(userID);
-            const doc = await docRef.get();
-
-            if (!doc.exists) {
-                throw new ApiError("Usuário não encontrado.", 404);
-            }
-
-            await docRef.delete();
-
-            res.status(204).send(); // No Content
-        } catch (error) {
-            next(error);
-        }
+    static async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
+        let userID = req.params.id;
+        res.send(await new UserService().delete(userID));
     }
 }
