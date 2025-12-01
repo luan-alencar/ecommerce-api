@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { getFirestore } from "firebase-admin/firestore";
-import { ApiError } from "../errors/ApiError.js";
 import { User } from "../models/user.model.js";
 import { UserService } from "../services/user.service.js";
 
