@@ -1,3 +1,4 @@
+import { NotFoundError } from "../errors/not-found.error.js";
 import { User } from "../models/user.model.js";
 import { UserRepository } from "../repositories/user.repository.js";
 
@@ -14,7 +15,11 @@ export class UserService {
     }
 
     async getById(id: string): Promise<User> {
-        return this.userRepository.getById(id);
+        const user = await this.userRepository.getById(id);
+        if (user!) {
+            return this.userRepository.getById(id);
+        }
+        return user;
     }
 
     async save(user: User): Promise<void> {
@@ -22,7 +27,11 @@ export class UserService {
     }
 
     async update(id: string, user: User): Promise<void> {
-      this.userRepository.update(id, user);
+        const _user = await this.userRepository.getById(id);
+        if (!_user) {
+            throw new NotFoundError("Usuário não encontrado!");
+        }
+        this.userRepository.update(_user);
     }
     async delete(id: string): Promise<void> {
         this.userRepository.delete(id);

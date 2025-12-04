@@ -1,11 +1,16 @@
-import { getFirestore } from "firebase-admin/firestore";
+import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import { User } from "../models/user.model.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 
 export class UserRepository {
 
+    private collection: CollectionReference;
+
+    constructor() {
+        this.collection = getFirestore().collection("users");
+    }
     async getAll(): Promise<User[]> {
-        const snapshot = await getFirestore().collection("users").get();
+        const snapshot = await this.collection.get();
         return snapshot.docs.map(doc => {
             return {
                 id: doc.id,
@@ -15,7 +20,7 @@ export class UserRepository {
     }
 
     async getById(id: string): Promise<User> {
-        const doc = await getFirestore().collection("users").doc(id).get();
+        const doc = await this.collection.doc(id).get();
         if (doc.exists) {
             return {
                 id: doc.id,
@@ -27,22 +32,18 @@ export class UserRepository {
     }
 
     async save(user: User): Promise<void> {
-        await getFirestore().collection("users").add(user);
+        await this.collection.add(user);
     }
 
-    async update(id: string, user: User): Promise<void> {
-        let docRef = getFirestore().collection("users").doc(id);
-        if ((await docRef.get()).exists) {
-            await docRef.set({
-                nome: user.nome,
-                email: user.email
-            });
-        } else {
-            throw new NotFoundError("Usuário não encontrado");
-        }
+    async update(user: User): Promise<void> {
+        let docRef = this.collection.doc(user.id);
+        await docRef.set({
+            nome: user.nome,
+            email: user.email
+        });
     }
 
     async delete(id: string): Promise<void> {
-        await getFirestore().collection("users").doc(id).delete()
+        await this.collection.doc(id).delete()
     }
 }
