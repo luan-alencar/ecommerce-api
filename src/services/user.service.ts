@@ -31,6 +31,7 @@ export class UserService {
         await this.userRepository.update(user);
     }
 
+
     async update(id: string, user: User): Promise<void> {
         const _user = await this.userRepository.getById(id);
         if (!_user) {
@@ -38,6 +39,7 @@ export class UserService {
         }
         this.userRepository.update(_user);
     }
+
     async delete(id: string): Promise<void> {
         this.userRepository.delete(id);
     }

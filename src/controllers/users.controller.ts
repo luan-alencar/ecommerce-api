@@ -5,7 +5,7 @@ import { UserService } from "../services/user.service.js";
 export class UsersController {
 
     // GET /users
-    static async getAll(req: Request, res: Response, next: NextFunction) {
+    static async getAll(req: Request, res: Response) {
         res.send(await new UserService().getAll());
     }
 
@@ -16,7 +16,12 @@ export class UsersController {
 
     // POST /users
     static async save(req: Request, res: Response, next: NextFunction): Promise<void> {
-        res.status(201).send(await new UserService().save(req.body));
+        try {
+            const user = await new UserService().save(req.body);
+            res.status(201).json(user ?? { message: "Usuário criado com sucesso" });
+        } catch (err) {
+            next(err);
+        }
     }
 
     // PUT /users/:id
