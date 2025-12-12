@@ -4,6 +4,7 @@ import { initializeApp as initializeFirebase } from "firebase/app";
 import { errorHandler } from "./middlewares/error-handler.middleware.js";
 import { routes } from "./routes/index.js";
 import { pageNotFoundHandler } from "./middlewares/page-not-found.middleware.js";
+import { auth } from "./middlewares/auth.middleware.js";
 
 initializeAdminApp();
 initializeFirebase({
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 
 
 // registra todas as rotas
+auth(app);
 routes(app);
 pageNotFoundHandler(app);
 errorHandler(app);

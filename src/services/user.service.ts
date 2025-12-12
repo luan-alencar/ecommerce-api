@@ -1,5 +1,5 @@
-import { NotFoundError } from "../errors/not-found.error.js";
 import { User } from "../models/user.model.js";
+import { NotFoundError } from "../errors/not-found.error.js";
 import { UserRepository } from "../repositories/user.repository.js";
 import { AuthService } from "./auth.service.js";
 
@@ -19,28 +19,31 @@ export class UserService {
 
     async getById(id: string): Promise<User> {
         const user = await this.userRepository.getById(id);
-        if (user!) {
-            return this.userRepository.getById(id);
+        if (!user) {
+            throw new NotFoundError("Usuário não encontrado!");
         }
         return user;
     }
 
-    async save(user: User): Promise<void> {
-        const authUser = await this.authService.create(user);
-        user.id = authUser.uid;
+    async save(user: User) {
+        const userAuth = await this.authService.create(user);
+        user.id = userAuth.uid;
         await this.userRepository.update(user);
     }
 
+    async update(id: string, user: User) {
+        const _user = await this.getById(id);
 
-    async update(id: string, user: User): Promise<void> {
-        const _user = await this.userRepository.getById(id);
-        if (!_user) {
-            throw new NotFoundError("Usuário não encontrado!");
-        }
-        this.userRepository.update(_user);
+        _user.nome = user.nome;
+        _user.email = user.email;
+
+        await this.authService.update(id, user);
+        await this.userRepository.update(_user);
     }
 
-    async delete(id: string): Promise<void> {
-        this.userRepository.delete(id);
+    async delete(id: string) {
+        await this.authService.delete(id);
+        await this.userRepository.delete(id);
     }
+
 }
