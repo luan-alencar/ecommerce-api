@@ -11,8 +11,8 @@ initializeFirebase({
   apiKey: process.env.FIRE_API_KEY
 });
  
-const app = express();
 const PORT = process.env.PORT || 3000;
+const app = express();
 
 
 // registra todas as rotas
