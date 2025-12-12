@@ -27,7 +27,7 @@ export class UserService {
 
     async save(user: User): Promise<void> {
         const authUser = await this.authService.create(user);
-        user.id = authUser.uid
+        user.id = authUser.uid;
         await this.userRepository.update(user);
     }
 
