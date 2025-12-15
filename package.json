@@ -13,6 +13,7 @@
   "type": "module",
   "dependencies": {
     "celebrate": "^15.0.3",
+    "cpf-cnpj-validator": "^1.0.3",
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
     "firebase": "^12.6.0"
