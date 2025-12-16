@@ -9,8 +9,8 @@ export class CompaniesController {
     }
 
     static async getById(req: Request, res: Response) {
-        const userId = req.params.id;
-        res.send(await new UserService().getById(userId));
+        const companyID = req.params.id;
+        res.send(await new CompanyService().getById(companyID));
     }
 
     static async save(req: Request, res: Response) {
