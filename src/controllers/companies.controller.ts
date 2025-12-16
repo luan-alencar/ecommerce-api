@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { User } from "../models/user.model.js";
 import { UserService } from "../services/user.service.js";
+import { CompanyService } from "../services/companies.service.js";
 
 export class CompaniesController {
     static async getAll(req: Request, res: Response) {
-        res.send(await new UserService().getAll());
+        res.send(await new CompanyService().getAll());
     }
 
     static async getById(req: Request, res: Response) {
@@ -13,9 +14,9 @@ export class CompaniesController {
     }
 
     static async save(req: Request, res: Response) {
-        await new UserService().save(req.body);
+        await new CompanyService().save(req.body);
         res.status(201).send({
-            message: `Usuário criado com sucesso!`
+            message: `Empresa criada com sucesso!`
         });
     }
 
