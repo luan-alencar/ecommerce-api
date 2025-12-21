@@ -31,4 +31,7 @@ export class CompanyRepository {
             .set(company);
     }
 
+    async delete(id: string) {
+        await this.collection.doc(id).delete();
+    }
 }

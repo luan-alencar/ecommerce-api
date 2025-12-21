@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { UserRepository } from "../repositories/user.repository.js";
 import { AuthService } from "./auth.service.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export class UserService {
 
@@ -20,7 +21,7 @@ export class UserService {
     async getById(id: string): Promise<User> {
         const user = await this.userRepository.getById(id);
         if (!user) {
-            throw new NotFoundError("Usuário não encontrado!");
+            throw new NotFoundError(MESSAGES.USER.NOT_FOUND);
         }
         return user;
     }

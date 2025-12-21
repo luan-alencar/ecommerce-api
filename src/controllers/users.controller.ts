@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/user.model.js";
 import { UserService } from "../services/user.service.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export class UsersController {
     static async getAll(req: Request, res: Response) {
@@ -15,7 +16,7 @@ export class UsersController {
     static async save(req: Request, res: Response) {
         await new UserService().save(req.body);
         res.status(201).send({
-            message: `Usuário criado com sucesso!`
+            message: MESSAGES.COMMON.CREATED
         });
     }
 
@@ -24,7 +25,7 @@ export class UsersController {
         const user = req.body as User;
         await new UserService().update(userId, user);
         res.send({
-            message: "Usuário alterado com sucesso!"
+            message: MESSAGES.COMMON.UPDATED
         });
     }
 

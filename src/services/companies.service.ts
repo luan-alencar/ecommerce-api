@@ -1,13 +1,18 @@
+import { MESSAGES } from "../constants/messages.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { Company } from "../models/company.model.js";
 import { CompanyRepository } from "../repositories/company.repository.js";
+import { isStorageUrlValid } from "../utils/validation-utils.js";
+import { UploadFileService } from "./upload-file.service.js";
 
 export class CompanyService {
 
     private companyRepository: CompanyRepository;
+    private uploadFileService: UploadFileService;
 
     constructor() {
         this.companyRepository = new CompanyRepository();
+        this.uploadFileService = new UploadFileService("images/companies/");
     }
 
     async getAll(): Promise<Company[]> {
@@ -17,18 +22,24 @@ export class CompanyService {
     async getById(id: string): Promise<Company> {
         const company = await this.companyRepository.getById(id);
         if (!company) {
-            throw new NotFoundError("Empresa não encontrada!");
+            throw new NotFoundError(MESSAGES.COMPANY.NOT_FOUND);
         }
         return company;
     }
 
     async save(company: Company) {
+        const logomarcaUrl = await this.uploadFileService.upload(company.logomarca);
+        company.logomarca = logomarcaUrl;
         await this.companyRepository.save(company);
     }
 
     async update(id: string, company: Company) {
         const _company = await this.getById(id);
 
+        if (!isStorageUrlValid(company.logomarca)) {
+            _company.logomarca = await this.uploadFileService.upload(company.logomarca);
+        }
+        
         _company.cpfCnpj = company.cpfCnpj;
         _company.razaoSocial = company.razaoSocial;
         _company.nomeFantasia = company.nomeFantasia;

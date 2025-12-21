@@ -2,7 +2,11 @@
   "name": "ecommerce-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "exports": "./lib/index.js",
+  "type": "module",
+  "engines": {
+    "node": "24"
+  },
   "scripts": {
     "start": "npx tsc-watch --onSuccess \"node --env-file=.env ./lib/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,17 +14,16 @@
   "keywords": [],
   "author": "Luan Alencar",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "celebrate": "^15.0.3",
     "cpf-cnpj-validator": "^1.0.3",
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
+    "file-type": "^21.1.1",
     "firebase": "^12.6.0"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.3",
-    "@tsconfig/recommended": "^1.0.13",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "firebase-admin": "^13.6.0",

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../models/user.model.js";
-import { UserService } from "../services/user.service.js";
 import { CompanyService } from "../services/companies.service.js";
+import { Company } from "../models/company.model.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export class CompaniesController {
     static async getAll(req: Request, res: Response) {
@@ -16,22 +16,17 @@ export class CompaniesController {
     static async save(req: Request, res: Response) {
         await new CompanyService().save(req.body);
         res.status(201).send({
-            message: `Empresa criada com sucesso!`
+            message: MESSAGES.COMMON.CREATED
         });
     }
 
     static async update(req: Request, res: Response) {
-        const userId = req.params.id;
-        const user = req.body as User;
-        await new UserService().update(userId, user);
+        const companyID = req.params.id;
+        const company = req.body as Company;
+        await new CompanyService().update(companyID, company);
         res.send({
-            message: "Usuário alterado com sucesso!"
+            message: MESSAGES.COMMON.UPDATED
         });
     }
 
-    static async delete(req: Request, res: Response) {
-        const userId = req.params.id;
-        await new UserService().delete(userId);
-        res.status(204).end();
-    }
 }
