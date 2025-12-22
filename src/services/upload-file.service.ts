@@ -3,6 +3,7 @@ import { getStorage, getDownloadURL } from "firebase-admin/storage";
 import { fileTypeFromBuffer } from "file-type";
 import { randomUUID } from "node:crypto";
 import { ValidationError } from "../errors/validation.error.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export class UploadFileService {
 
@@ -13,11 +14,11 @@ export class UploadFileService {
 
         const fileType = await fileTypeFromBuffer(fileBuffer);
         if (!fileType) {
-            throw new ValidationError("A extensão do arquivo não é válida!");
+            throw new ValidationError(MESSAGES.UPLOAD.EXTENSION_NOT_VALID);
         }
 
         if (fileType.mime !== "image/jpeg" && fileType.mime !== "image/png") {
-            throw new ValidationError("A imagem precisa ser PNG ou JPEG!");
+            throw new ValidationError(MESSAGES.UPLOAD.IMAGE_NOT_VALID);
         }
 
         const fileName = `${randomUUID().toString()}.${fileType?.ext}`;

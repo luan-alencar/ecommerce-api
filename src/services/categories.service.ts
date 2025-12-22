@@ -42,7 +42,7 @@ export class CategoryService {
 
     async delete(id: string) {
         if (await this.productRepository.getCountByCategoria(id) > 0) {
-            throw new ValidationError("Não é possível excluir uma categoria com produtos relacionados!");
+            throw new ValidationError(MESSAGES.CATEGORY.HAS_PRODUCTS);
         }
         await this.categoryRepository.delete(id);
     }

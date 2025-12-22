@@ -64,7 +64,7 @@ export class ProductService {
     private async getCategoriaById(id: string) {
         const categoria = await this.categoryRepository.getById(id);
         if (!categoria) {
-            throw new NotFoundError("Categoria não encontrada!");
+            throw new NotFoundError(MESSAGES.CATEGORY.NOT_FOUND_CATEGORY);
         }
         return categoria;
     }

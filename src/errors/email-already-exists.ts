@@ -1,8 +1,9 @@
+import { MESSAGES } from "../constants/messages.js";
 import { ErrorBase } from "./base.error.js";
 
 export class EmailAlreadyExistsError extends ErrorBase {
 
-    constructor(message = "O e-mail já existe em outra conta!") {
+    constructor(message = MESSAGES.USER.EMAIL_ALREADY_EXISTS) {
         super(409, message);
     }
 }
