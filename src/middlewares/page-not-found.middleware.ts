@@ -4,6 +4,6 @@ import { MESSAGES } from "../constants/messages.js";
 
 export const pageNotFoundHandler = (app: express.Express) => {
     app.use((req: Request, res: Response, next: NextFunction) => {
-        next(new NotFoundError(MESSAGES.ERRORS.PAGE_NOT_FOUND));
+        next(new NotFoundError(MESSAGES.ERROR.PAGE_NOT_FOUND));
     });
 };

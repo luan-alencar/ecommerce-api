@@ -3,7 +3,7 @@ import { ErrorBase } from "./base.error.js";
 
 export class InternalServerError extends ErrorBase {
 
-    constructor(message = MESSAGES.ERRORS.INTERNAL_SERVER_ERROR) {
+    constructor(message = MESSAGES.ERROR.INTERNAL_SERVER_ERROR) {
         super(500, message);
     }
 
