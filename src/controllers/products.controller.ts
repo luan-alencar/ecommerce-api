@@ -21,7 +21,7 @@ export class ProductsController {
     static async save(req: Request, res: Response) {
         await new ProductService().save(req.body);
         res.status(201).send({
-            message: MESSAGES.PRODUCT.NOT_FOUND
+            message: MESSAGES.COMMON.CREATED
         });
     }
 

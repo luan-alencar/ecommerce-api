@@ -1,4 +1,3 @@
-import { MESSAGES } from "../constants/messages.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { Product } from "../models/product.model.js";
 import { CategoryRepository } from "../repositories/category.repository.js";
@@ -29,7 +28,7 @@ export class ProductService {
     async getById(id: string): Promise<Product> {
         const product = await this.productRepository.getById(id);
         if (!product) {
-            throw new NotFoundError(MESSAGES.PRODUCT.NOT_FOUND);
+            throw new NotFoundError("Produto não encontrado!");
         }
         return product;
     }
@@ -64,7 +63,7 @@ export class ProductService {
     private async getCategoriaById(id: string) {
         const categoria = await this.categoryRepository.getById(id);
         if (!categoria) {
-            throw new NotFoundError(MESSAGES.CATEGORY.NOT_FOUND);
+            throw new NotFoundError("Categoria não encontrada!");
         }
         return categoria;
     }
