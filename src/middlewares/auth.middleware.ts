@@ -32,13 +32,27 @@ export const auth = (app: express.Express) => {
     });
 
     const isRouteUnAuthenticated = (req: Request): boolean => {
-        if (req.method === "POST") {
-            if (req.url.startsWith("/auth/login") ||
-                req.url.startsWith("/auth/recovery") ||
-                req.url.startsWith("/auth/signin")) {
-                return true;
-            }
-        }
-        return false;
+
+    // 🔓 ROTAS DEV (SEED)
+    if (
+        process.env.NODE_ENV === "development" &&
+        req.method === "POST" &&
+        req.url.startsWith("/seed")
+    ) {
+        return true;
     }
+
+    // 🔓 ROTAS DE AUTH
+    if (req.method === "POST") {
+        if (
+            req.url.startsWith("/auth/login") ||
+            req.url.startsWith("/auth/recovery") ||
+            req.url.startsWith("/auth/signin")
+        ) {
+            return true;
+        }
+    }
+
+    return false;
+};
 }
