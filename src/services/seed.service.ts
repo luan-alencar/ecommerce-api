@@ -1,5 +1,5 @@
 import admin from "firebase-admin";
-import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { getFirestore } from "firebase-admin/firestore";
 import { User } from "../models/user.model.js";
 
 export class SeedService {
@@ -30,8 +30,7 @@ export class SeedService {
       .collection("users")
       .doc(user.id)
       .set({
-        ...user,
-        createdAt: FieldValue.serverTimestamp()
+        ...user
       });
   }
 

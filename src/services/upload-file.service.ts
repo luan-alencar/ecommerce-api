@@ -24,7 +24,7 @@ export class UploadFileService {
         const fileName = `${randomUUID().toString()}.${fileType?.ext}`;
         fs.writeFileSync(fileName, fileBuffer);
 
-        const bucket = getStorage().bucket();
+        const bucket = getStorage().bucket("e-commerce-api-571d8.firebasestorage.app");
         const uploadResponse = await bucket.upload(fileName, {
             destination: this.path + fileName
         });
