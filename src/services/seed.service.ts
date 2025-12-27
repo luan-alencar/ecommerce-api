@@ -6,8 +6,8 @@ export class SeedService {
   private db = getFirestore();
 
   async seedUsers() {
-    const email = "faceyij973@mucate.com";
-    const password = "manager"; // 👉 apenas para DEV
+    const email = "luanalencar134@gmail.com";
+    const password = "manager"; 
     const displayName = "Administrador";
 
     // 1️⃣ Criar usuário no Firebase Auth
@@ -17,13 +17,12 @@ export class SeedService {
       displayName
     });
 
-    // 2️⃣ Criar usuário no Firestore usando o UID do Auth
+    //  Criar usuário no Firestore usando o UID do Auth
     const user = new User({
       id: authUser.uid,
       nome: displayName,
       email: email,
       password: password,
-      role: "ADMIN",
       ativo: true
     });
 

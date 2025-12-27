@@ -42,7 +42,6 @@ export const auth = (app: express.Express) => {
         return true;
     }
 
-    // 🔓 ROTAS DE AUTH
     if (req.method === "POST") {
         if (
             req.url.startsWith("/auth/login") ||

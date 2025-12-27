@@ -24,7 +24,7 @@ export class UploadFileService {
         const fileName = `${randomUUID().toString()}.${fileType?.ext}`;
         fs.writeFileSync(fileName, fileBuffer);
 
-        const bucket = getStorage().bucket("e-commerce-d1288.appspot.com");
+        const bucket = getStorage().bucket();
         const uploadResponse = await bucket.upload(fileName, {
             destination: this.path + fileName
         });
