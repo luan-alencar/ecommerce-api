@@ -1,3 +1,4 @@
+import { MESSAGES } from "../constants/messages.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { OrderItem } from "../models/order-item.model.js";
 import { Order, QueryParamsOrder, OrderStatus } from "../models/order-model.js";
@@ -23,20 +24,20 @@ export class OrderService {
     async save(order: Order) {
         const empresa = await this.companyRepository.getById(order.empresa.id!);
         if (!empresa) {
-            throw new NotFoundError("Empresa não encontrada!");
+            throw new NotFoundError(MESSAGES.COMPANY.NOT_FOUND);
         }
         order.empresa = empresa;
 
         const formaPagamento = await this.paymentMethodRepository.getById(order.formaPagamento.id);
         if (!formaPagamento) {
-            throw new NotFoundError("Forma de Pagamento não encontrada!");
+            throw new NotFoundError(MESSAGES.PAYMENT_METHOD.NOT_FOUND);
         }
         order.formaPagamento = formaPagamento;
 
         for (const item of order.items!) {
             const produto = await this.productRepository.getById(item.produto.id);
             if (!produto) {
-                throw new NotFoundError("Produto não encontrado!");
+                throw new NotFoundError(MESSAGES.PRODUCT.NOT_FOUND);
             }
             item.produto = produto;
         }
