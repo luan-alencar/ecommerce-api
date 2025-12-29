@@ -8,6 +8,7 @@ import { categoryRoutes } from "./categories.route.js";
 import { productRoutes } from "./products.route.js";
 import { seedRoutes } from "./seed.route.js";
 import { orderRoutes } from "./order.route.js";
+import { paymentMethodsRoutes } from "./payment-method.route.js";
 
 export const routes = (app: express.Express) => {
   app.use(express.json({ limit: "5mb" }));
@@ -23,9 +24,9 @@ export const routes = (app: express.Express) => {
   authenticatedRoutes.use(companyRoutes);
   authenticatedRoutes.use(categoryRoutes);
   authenticatedRoutes.use(productRoutes);
+  authenticatedRoutes.use(paymentMethodsRoutes);
   authenticatedRoutes.use(orderRoutes);
   app.use(
-    // #swagger.security = [{ "bearerAuth": [] }]
     authenticatedRoutes
   );
 }

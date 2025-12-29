@@ -1,3 +1,4 @@
+import { MESSAGES } from "../constants/messages.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { PaymentMethod } from "../models/payment-method.model.js";
 import { PaymentMethodRepository } from "../repositories/payment-method.repository.js";
@@ -17,7 +18,7 @@ export class PaymentMethodService {
     async getById(id: string): Promise<PaymentMethod> {
         const paymentMethod = await this.paymentMethodRepository.getById(id);
         if (!paymentMethod) {
-            throw new NotFoundError("Forma de Pagamento não encontrada!");
+            throw new NotFoundError(MESSAGES.PAYMENT_METHOD.NOT_FOUND);
         }
         return paymentMethod;
     }

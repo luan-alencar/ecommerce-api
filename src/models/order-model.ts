@@ -16,7 +16,7 @@ export class Order {
     isEntrega: boolean;
     formaPagamento: PaymentMethod;
     taxaEntrega: number;
-    items: OrderItem[];
+    items?: OrderItem[];
     status: OrderStatus;
     observacoes: string;
     subtotal: number;
@@ -109,48 +109,56 @@ export const changeStatusOrderSchema = Joi.object().keys({
 })
 
 export const orderConverter: FirestoreDataConverter<Order> = {
-    toFirestore: (order: Order): DocumentData => {
-        return {
-            empresa: {
-                id: order.empresa.id,
-                logomarca: order.empresa.logomarca,
-                cpfCnpj: order.empresa.cpfCnpj,
-                razaoSocial: order.empresa.razaoSocial,
-                nomeFantasia: order.empresa.nomeFantasia,
-                telefone: order.empresa.telefone,
-                endereco: order.empresa.endereco,
-                localizacao: order.empresa.localizacao
-            },
-            cliente: {
-                nome: order.cliente.nome,
-                telefone: order.cliente.telefone
-            },
-            endereco: {
-                cep: order.endereco.cep,
-                logradouro: order.endereco.logradouro,
-                numero: order.endereco.numero,
-                complemento: order.endereco.complemento,
-                cidade: order.endereco.cidade,
-                uf: order.endereco.uf
-            },
-            cpfCnpjCupom: order.cpfCnpjCupom,
-            data: FieldValue.serverTimestamp(),
-            isEntrega: order.isEntrega,
-            formaPagamento: {
-                id: order.formaPagamento.id,
-                descricao: order.formaPagamento.descricao
-            },
-            taxaEntrega: order.taxaEntrega,
-            status: order.status,
-            observacoes: order.observacoes,
-            subtotal: order.getSubtotal(),
-            total: order.getTotal()
-        };
-    },
-    fromFirestore: (snapshot: QueryDocumentSnapshot): Order => {
-        return new Order({
-            id: snapshot.id,
-            ...snapshot.data()
-        });
-    }
-}
+  toFirestore: (order: Order): DocumentData => {
+
+    const subtotal = order.items?.reduce((total, item) => {
+      return total + (item.produto.preco * item.qtde);
+    }, 0) ?? 0;
+
+    const total = subtotal + order.taxaEntrega;
+
+    return {
+      empresa: {
+        id: order.empresa.id,
+        logomarca: order.empresa.logomarca,
+        cpfCnpj: order.empresa.cpfCnpj,
+        razaoSocial: order.empresa.razaoSocial,
+        nomeFantasia: order.empresa.nomeFantasia,
+        telefone: order.empresa.telefone,
+        endereco: order.empresa.endereco,
+        localizacao: order.empresa.localizacao
+      },
+      cliente: {
+        nome: order.cliente.nome,
+        telefone: order.cliente.telefone
+      },
+      endereco: order.endereco ? {
+        cep: order.endereco.cep,
+        logradouro: order.endereco.logradouro,
+        numero: order.endereco.numero,
+        complemento: order.endereco.complemento,
+        cidade: order.endereco.cidade,
+        uf: order.endereco.uf
+      } : null,
+      cpfCnpjCupom: order.cpfCnpjCupom,
+      data: FieldValue.serverTimestamp(),
+      isEntrega: order.isEntrega,
+      formaPagamento: {
+        id: order.formaPagamento.id,
+        descricao: order.formaPagamento.descricao
+      },
+      taxaEntrega: order.taxaEntrega,
+      status: order.status,
+      observacoes: order.observacoes,
+      subtotal,
+      total
+    };
+  },
+
+  fromFirestore: (snapshot: QueryDocumentSnapshot): Order => {
+    return new Order({
+      id: snapshot.id,
+      ...snapshot.data()
+    });
+  }
+};
