@@ -39,6 +39,14 @@ export const MESSAGES = {
     NOT_FOUND: "Produto não encontrado.",
   },
 
+   /* ==========================
+   * PAYMENT METHOD
+   * ========================== */
+  PAYMENT_METHOD: {
+    NOT_FOUND: "Forma de Pagamento não encontrada." 
+    
+  },
+
   /* ==========================
    * UPLOAD
    * ========================== */

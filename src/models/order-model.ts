@@ -16,7 +16,7 @@ export class Order {
     isEntrega: boolean;
     formaPagamento: PaymentMethod;
     taxaEntrega: number;
-    items?: OrderItem[];
+    items: OrderItem[];
     status: OrderStatus;
     observacoes: string;
     subtotal: number;
