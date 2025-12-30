@@ -550,6 +550,35 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "auth/signin",
+          "id": "43ca5e30-b836-4212-acf2-eff062719ebe",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/auth/signin",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "signin"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "id": "898a4612-f1a5-4c75-ac80-4d8cd5f91bd3"
