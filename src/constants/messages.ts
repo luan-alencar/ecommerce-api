@@ -17,6 +17,13 @@ export const MESSAGES = {
   },
 
   /* ==========================
+   * ORDER
+   * ========================== */
+  ORDER: {
+    NOT_FOUND: "Pedido não encontrado."
+  },
+
+  /* ==========================
    * COMPANY
    * ========================== */
   COMPANY: {

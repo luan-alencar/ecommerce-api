@@ -24,8 +24,11 @@ export const updatePaymentSchema = Joi.object().keys({
 });
 
 export const paymentMethodConverter: FirestoreDataConverter<PaymentMethod> = {
+    
     toFirestore: (paymentMethod: PaymentMethod): DocumentData => {
+        
         return {
+            
             descricao: paymentMethod.descricao,
             ativa: paymentMethod.ativa
         };

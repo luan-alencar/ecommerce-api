@@ -501,7 +501,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"luanalencar134@gmail.com\",\r\n    \"password\": \"manager\"\r\n}",
+              "raw": "{\r\n    \"email\": \"luanalencar134@gmail.com\",\r\n    \"password\": \"123123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -594,7 +594,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"empresa\": {\r\n        \"id\": \"ivW8wUN03SHJnCeW05JA\"\r\n    },\r\n    \"cliente\": {\r\n        \"nome\": \"Café Central Campina LTDA\",\r\n        \"telefone\": \"83998881234\"\r\n    },\r\n    \"isEntrega\": true,\r\n    \"endereco\": {\r\n        \"cep\": \"58400-150\",\r\n        \"logradouro\": \"Rua João Pessoa\",\r\n        \"numero\": \"320\",\r\n        \"bairro\": \"Centro\",\r\n        \"complemento\": \"Loja 02\",\r\n        \"cidade\": \"Campina Grande\",\r\n        \"uf\": \"PB\"\r\n    },\r\n    \"cpfCnpjCupom\": \"27865730000104\",\r\n    \"formaPagamento\": {\r\n        \"id\": \"LW3SCGXg4GzbFVXLycCV\"\r\n    },\r\n    \"taxaEntrega\": 8.5,\r\n    \"items\": [\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"Fssx8mZX6rFbdRSrALuw\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Bolo de noiva com decoração branca simples. Sem flores naturais.\"\r\n        },\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"EFSxG5uUtl9CRFcl7WGf\"\r\n            },\r\n            \"qtde\": 2,\r\n            \"observacao\": \"Bolos para consumo no local. Recheio de ameixa suave.\"\r\n        }\r\n    ],\r\n    \"observacoes\": \"Entrega no período da manhã, antes das 10h.\"\r\n}",
+              "raw": "{\r\n  \"empresa\": { \"id\": \"ivW8wUN03SHJnCeW05JA\" },\r\n  \"cliente\": { \"nome\": \"João Batista\", \"telefone\": \"83991110001\" },\r\n  \"isEntrega\": true,\r\n  \"endereco\": {\r\n    \"cep\": \"58410-100\",\r\n    \"logradouro\": \"Rua Floriano Peixoto\",\r\n    \"numero\": \"55\",\r\n    \"bairro\": \"Centro\",\r\n    \"complemento\": \"Casa\",\r\n    \"cidade\": \"Campina Grande\",\r\n    \"uf\": \"PB\"\r\n  },\r\n  \"formaPagamento\": { \"id\": \"LW3SCGXg4GzbFVXLycCV\" },\r\n  \"taxaEntrega\": 8.5,\r\n  \"items\": [\r\n    {\r\n      \"produto\": { \"id\": \"JjitCL5S6DDAeMtpezVE\" },\r\n      \"qtde\": 1\r\n    }\r\n  ],\r\n  \"observacoes\": \"Pedido criado corretamente\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -615,6 +615,35 @@
           "response": []
         },
         {
+          "name": "orders/:id/status",
+          "id": "4740b24e-58b8-43f4-aa86-6c84467bc56a",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"entrega\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/orders/9XvsZkHesSRnD2T16yq1",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "orders",
+                "9XvsZkHesSRnD2T16yq1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "orders/",
           "id": "d3f757b1-1644-4949-8e65-c8b2ef4ce497",
           "protocolProfileBehavior": {
@@ -628,7 +657,7 @@
               "raw": "{\r\n    \"empresa\": {\r\n        \"id\": \"ivW8wUN03SHJnCeW05JA\"\r\n    },\r\n    \"cliente\": {\r\n        \"nome\": \"Rafael Nogueira\",\r\n        \"telefone\": \"83997654321\"\r\n    },\r\n    \"isEntrega\": false,\r\n    \"endereco\": null,\r\n    \"cpfCnpjCupom\": \"98765432100\",\r\n    \"formaPagamento\": {\r\n        \"id\": \"PIX\"\r\n    },\r\n    \"taxaEntrega\": 0,\r\n    \"items\": [\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"JjitCL5S6DDAeMtpezVE\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Cobertura de limão mais suave e sem raspas por cima.\"\r\n        },\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"SOBCTX9rPccBu3Xxq5fp\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Bolo simples, bem molhadinho, sem coco.\"\r\n        }\r\n    ],\r\n    \"observacoes\": \"Cliente fará a retirada no balcão às 17h.\"\r\n}"
             },
             "url": {
-              "raw": "localhost:3000/orders/?empresaId=ivW8wUN03SHJnCeW05JA&status=aprovado",
+              "raw": "localhost:3000/orders/",
               "host": [
                 "localhost"
               ],
@@ -639,22 +668,101 @@
               ],
               "query": [
                 {
-                  "key": "dataInicio",
-                  "value": "2025-11-10",
+                  "key": "empresaId",
+                  "value": "ivW8wUN03SHJnCeW05JA",
+                  "type": "text",
+                  "uuid": "8924e593-45e7-4dda-aaa5-dacadc1a3832",
                   "disabled": true
                 },
                 {
                   "key": "dataFim",
-                  "value": "2025-09-30",
+                  "value": "2025-12-28",
+                  "uuid": "ffa9a644-3e3a-48ad-b278-f245c54a189e",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "orders/:id/itens",
+          "id": "c502d1c0-b7c2-4073-8588-d85cf73b9c08",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"empresa\": {\r\n        \"id\": \"ivW8wUN03SHJnCeW05JA\"\r\n    },\r\n    \"cliente\": {\r\n        \"nome\": \"Rafael Nogueira\",\r\n        \"telefone\": \"83997654321\"\r\n    },\r\n    \"isEntrega\": false,\r\n    \"endereco\": null,\r\n    \"cpfCnpjCupom\": \"98765432100\",\r\n    \"formaPagamento\": {\r\n        \"id\": \"PIX\"\r\n    },\r\n    \"taxaEntrega\": 0,\r\n    \"items\": [\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"JjitCL5S6DDAeMtpezVE\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Cobertura de limão mais suave e sem raspas por cima.\"\r\n        },\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"SOBCTX9rPccBu3Xxq5fp\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Bolo simples, bem molhadinho, sem coco.\"\r\n        }\r\n    ],\r\n    \"observacoes\": \"Cliente fará a retirada no balcão às 17h.\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:3000/orders/",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "orders",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "empresaId",
+                  "value": "ivW8wUN03SHJnCeW05JA",
+                  "type": "text",
+                  "uuid": "8924e593-45e7-4dda-aaa5-dacadc1a3832",
                   "disabled": true
                 },
                 {
+                  "key": "dataFim",
+                  "value": "2025-12-28",
+                  "uuid": "ffa9a644-3e3a-48ad-b278-f245c54a189e",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "orders/:id",
+          "id": "2bfe2146-32d3-49b1-a428-dabb85423bfd",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"empresa\": {\r\n        \"id\": \"ivW8wUN03SHJnCeW05JA\"\r\n    },\r\n    \"cliente\": {\r\n        \"nome\": \"Rafael Nogueira\",\r\n        \"telefone\": \"83997654321\"\r\n    },\r\n    \"isEntrega\": false,\r\n    \"endereco\": null,\r\n    \"cpfCnpjCupom\": \"98765432100\",\r\n    \"formaPagamento\": {\r\n        \"id\": \"PIX\"\r\n    },\r\n    \"taxaEntrega\": 0,\r\n    \"items\": [\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"JjitCL5S6DDAeMtpezVE\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Cobertura de limão mais suave e sem raspas por cima.\"\r\n        },\r\n        {\r\n            \"produto\": {\r\n                \"id\": \"SOBCTX9rPccBu3Xxq5fp\"\r\n            },\r\n            \"qtde\": 1,\r\n            \"observacao\": \"Bolo simples, bem molhadinho, sem coco.\"\r\n        }\r\n    ],\r\n    \"observacoes\": \"Cliente fará a retirada no balcão às 17h.\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:3000/orders/9XvsZkHesSRnD2T16yq1",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "orders",
+                "9XvsZkHesSRnD2T16yq1"
+              ],
+              "query": [
+                {
                   "key": "empresaId",
-                  "value": "ivW8wUN03SHJnCeW05JA"
+                  "value": "ivW8wUN03SHJnCeW05JA",
+                  "type": "text",
+                  "uuid": "8924e593-45e7-4dda-aaa5-dacadc1a3832",
+                  "disabled": true
                 },
                 {
-                  "key": "status",
-                  "value": "aprovado"
+                  "key": "dataFim",
+                  "value": "2025-12-28",
+                  "uuid": "ffa9a644-3e3a-48ad-b278-f245c54a189e",
+                  "disabled": true
                 }
               ]
             }
@@ -663,6 +771,128 @@
         }
       ],
       "id": "6bb49900-14db-4868-893d-835df9c2e146"
+    },
+    {
+      "name": "Payment Mathod",
+      "item": [
+        {
+          "name": "payment-method/",
+          "id": "b7cb7656-4a30-41ac-978c-89360a37435d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/payment-methods",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payment-methods"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payment-method/id",
+          "id": "871bbc24-a57d-4e39-b3f5-7c5e8e75134b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/payment-methods/LW3SCGXg4GzbFVXLycCV",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payment-methods",
+                "LW3SCGXg4GzbFVXLycCV"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payment-method/",
+          "id": "64e8bcf3-3378-4a8b-8f37-4908c298b15a",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Luan ADMIN\",\r\n    \"email\": \"luanalencar134@gmail.com\",\r\n    \"password\": \"123123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/payment-methods",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payment-methods"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payment-method/id",
+          "id": "270a8823-e5f4-4c36-8b27-32a0f38ae6d5",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nome\": \"Luan Alencar\",\r\n    \"email\": \"luanalencar134@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/payment-methods/LW3SCGXg4GzbFVXLycCV",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payment-methods",
+                "LW3SCGXg4GzbFVXLycCV"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "payment-method/id",
+          "id": "b6da6926-6d6b-476e-bd49-9bb5eee94f55",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/payment-methods/LW3SCGXg4GzbFVXLycCV",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "payment-methods",
+                "LW3SCGXg4GzbFVXLycCV"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "143e9936-6e60-4953-b2de-fb5b7bfdcd1a"
     }
   ],
   "auth": {
@@ -670,35 +900,9 @@
     "bearer": [
       {
         "key": "token",
-        "value": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OGQ1YTM3OWI3OGJkZjFlNTBhNDA5MTEzZjJiMGM3NWU0NTJlNDciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWRtaW5pc3RyYWRvciIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lLWNvbW1lcmNlLWFwaS01NzFkOCIsImF1ZCI6ImUtY29tbWVyY2UtYXBpLTU3MWQ4IiwiYXV0aF90aW1lIjoxNzY2OTkyNTQ4LCJ1c2VyX2lkIjoiVVJiVHZwMUEzS2VHeENFbFdQUkRlOHdtTzdpMiIsInN1YiI6IlVSYlR2cDFBM0tlR3hDRWxXUFJEZTh3bU83aTIiLCJpYXQiOjE3NjY5OTI1NDksImV4cCI6MTc2Njk5NjE0OSwiZW1haWwiOiJsdWFuYWxlbmNhcjEzNEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsibHVhbmFsZW5jYXIxMzRAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.NSjBFoPfqziAgcZonSqGe8IblLjabA1JUU7D2shf23a4fgub3sup_M8f38CziQTs4IdabNnRZ3J2RIpmPEeCHaDyiX2_ykQWzOGuu-AGLjIRUhNtdKA4ywR_AjOOLMQOmtHwgC5Y91Uo6nrvxWD6FAE-1bAhv75wATjYeZfmMc9-sVibNFLlgwuK4QnOTCb9Uzc0s1R4sep1WdnDzF7uUZECBdrz7TFKDcRXzd9QB4mqN-PZa5DUCD6YQlc7uUyjj58_jjXNGzTHlYDHeJORfkRSN2ha4Rq0y_2EqrZc_N9fZbdMQeADld_z6wma8oOTKB1b5L3fVDNYK7MXVD50Dw",
+        "value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzOGVhNmEwNDA4YjBjYzVkYTE4OWRmYzg4ODgyZDBmMWI3ZmJmMGUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWRtaW5pc3RyYWRvciIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lLWNvbW1lcmNlLWFwaS01NzFkOCIsImF1ZCI6ImUtY29tbWVyY2UtYXBpLTU3MWQ4IiwiYXV0aF90aW1lIjoxNzY3MDgyNTMyLCJ1c2VyX2lkIjoiVVJiVHZwMUEzS2VHeENFbFdQUkRlOHdtTzdpMiIsInN1YiI6IlVSYlR2cDFBM0tlR3hDRWxXUFJEZTh3bU83aTIiLCJpYXQiOjE3NjcwODI1MzMsImV4cCI6MTc2NzA4NjEzMywiZW1haWwiOiJsdWFuYWxlbmNhcjEzNEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJsdWFuYWxlbmNhcjEzNEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.XiHbNRGGzUvO_3GzZWpbute6HbWg8Te_65My4DjK5TQMZam9SpXKlPP2kNrmtU8hRNoSEo9aoeaKSV3Lp61PrRpOZtXKpekVaLiivmD-NFJUvH1umi4hB_FDsP4Y8J4IG-62YERwtHYup9h1oxkXB-D8FpqZ-Lrn7cxy_Cjg1gf9nA3uiPROYv74NgrY3OQ6Qj-80EkTHX5mrYOPf1ZzXGxp5BiXVYonyDywPwzV7kWQest7cLqFeRuwoywv71Q4nmfzTaAeh1EPQI8ap1FF5u3Bh0hKHd-qCLN6Oa71OP7GJBVhBYid29Cx-cWzxHWnsXjGjsFGgi2NNSQg47fdRQ",
         "type": "string"
       }
     ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "ea8f9f8a-488f-4d31-b86d-0a52ea71334e",
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "3615df58-a2f0-45ad-825e-91074b06b2d8",
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ]
+  }
 }

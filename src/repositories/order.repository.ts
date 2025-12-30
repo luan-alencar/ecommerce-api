@@ -2,7 +2,8 @@ import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import dayjs from "dayjs";
 import { OrderItem, orderItemConverter } from "../models/order-item.model.js";
 import { NotFoundError } from "../errors/not-found.error.js";
-import { Order, orderConverter, QueryParamsOrder, OrderStatus } from "../models/order-model.js";
+import { Order, orderConverter, OrderStatus, QueryParamsOrder } from "../models/order-model.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export class OrderRepository {
 
@@ -68,7 +69,7 @@ export class OrderRepository {
     async getById(pedidoId: string): Promise<Order> {
         const order = (await this.collection.doc(pedidoId).get()).data();
         if (!order) {
-            throw new NotFoundError("Pedido não encontrado!");
+            throw new NotFoundError(MESSAGES.ORDER.NOT_FOUND);
         }
         order.items = await this.getItems(pedidoId);
         return order;
