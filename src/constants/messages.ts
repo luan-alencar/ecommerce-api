@@ -69,6 +69,7 @@ export const MESSAGES = {
     UNAUTHORIZED: "Não autorizado.",
     FORBIDDEN: "Acesso negado.",
     INVALID_TOKEN: "Token inválido ou expirado.",
+    INVALID_UNAUTHORIZED_RESOURCE: "Você não possui permissão para acessar esse recurso!"
   },
 
   /* ==========================
