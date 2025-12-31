@@ -1,0 +1,36 @@
+import fs from "node:fs";
+import { getStorage, getDownloadURL } from "firebase-admin/storage";
+import { fileTypeFromBuffer } from "file-type";
+import { randomUUID } from "node:crypto";
+import { ValidationError } from "../errors/validation.error.js";
+import { MESSAGES } from "../constants/messages.js";
+
+export class UploadFileService {
+
+    constructor(private path: string) { }
+
+    async upload(base64: string): Promise<string> {
+        const fileBuffer = Buffer.from(base64, "base64");
+
+        const fileType = await fileTypeFromBuffer(fileBuffer);
+        if (!fileType) {
+            throw new ValidationError(MESSAGES.UPLOAD.EXTENSION_NOT_VALID);
+        }
+
+        if (fileType.mime !== "image/jpeg" && fileType.mime !== "image/png") {
+            throw new ValidationError(MESSAGES.UPLOAD.IMAGE_NOT_VALID);
+        }
+
+        const fileName = `${randomUUID().toString()}.${fileType?.ext}`;
+        fs.writeFileSync(fileName, fileBuffer);
+
+        const bucket = getStorage().bucket("e-commerce-api-571d8.firebasestorage.app");
+        const uploadResponse = await bucket.upload(fileName, {
+            destination: this.path + fileName
+        });
+
+        fs.unlinkSync(fileName);
+
+        return getDownloadURL(uploadResponse[0]);
+    }
+}
