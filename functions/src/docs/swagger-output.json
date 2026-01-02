@@ -1,0 +1,909 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Nara Bolos API",
+    "description": "\nAPI para gestão de pedidos, produtos e clientes da Nara Bolos.\n\n⚠️ A aplicação possui APENAS 3 administradores fixos:\n- Luan Alencar (luanalencar134@gmail.com)\n- Quenia Sinara (slimakenia5@gmail.com)\n- Kaiã Lucca\n\nNão existe cadastro público de administradores.\n        ",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5001/e-commerce-api-571d8/us-central1/api",
+      "description": "Dev"
+    },
+    {
+      "url": "https://us-central1-e-commerce-api-571d8.cloudfunctions.net/api",
+      "description": "Prod"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Autenticação dos administradores da Nara Bolos"
+    },
+    {
+      "name": "Customers",
+      "description": "Clientes da Nara Bolos"
+    },
+    {
+      "name": "Products",
+      "description": "Catálogo de bolos"
+    },
+    {
+      "name": "Payment Methods",
+      "description": "Formas de pagamento"
+    },
+    {
+      "name": "Orders",
+      "description": "Pedidos de bolos"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recovery": {
+      "post": {
+        "description": "",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/companies/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "categoriaId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/payment-methods": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/payment-methods/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/orders/{id}/items": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/orders/{id}/status": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "AdminsFixos": {
+        "type": "object",
+        "properties": {
+          "admins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Kaiã Lucca"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "ADMIN"
+                }
+              }
+            }
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "luanalencar134@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "recovery": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "slimakenia5@gmail.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "admin-01"
+          },
+          "nome": {
+            "type": "string",
+            "example": "Luan Alencar"
+          },
+          "email": {
+            "type": "string",
+            "example": "luanalencar134@gmail.com"
+          }
+        }
+      },
+      "addCustomer": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "João da Silva"
+          },
+          "telefone": {
+            "type": "string",
+            "example": "11999999999"
+          }
+        },
+        "required": [
+          "nome",
+          "telefone"
+        ]
+      },
+      "addProduct": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Bolo de Chocolate"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Bolo de chocolate com cobertura cremosa"
+          },
+          "preco": {
+            "type": "number",
+            "example": 89.9
+          },
+          "imagem": {},
+          "ativa": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "nome",
+          "preco"
+        ]
+      },
+      "updateProduct": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Bolo de Chocolate Gourmet"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Bolo de chocolate com recheio especial"
+          },
+          "preco": {
+            "type": "number",
+            "example": 99.9
+          },
+          "imagem": {},
+          "ativa": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "nome",
+          "preco",
+          "ativa"
+        ]
+      },
+      "addPaymentMethod": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "example": "Pix"
+          },
+          "ativa": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "descricao"
+        ]
+      },
+      "updatePaymentMethod": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "example": "Cartão de Crédito"
+          },
+          "ativa": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "descricao",
+          "ativa"
+        ]
+      },
+      "addOrder": {
+        "type": "object",
+        "properties": {
+          "cliente": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "João da Silva"
+              },
+              "telefone": {
+                "type": "string",
+                "example": "11999999999"
+              }
+            },
+            "required": [
+              "nome",
+              "telefone"
+            ]
+          },
+          "endereco": {
+            "type": "object",
+            "properties": {
+              "logradouro": {
+                "type": "string",
+                "example": "Rua das Flores"
+              },
+              "numero": {
+                "type": "string",
+                "example": "100"
+              },
+              "bairro": {
+                "type": "string",
+                "example": "Centro"
+              },
+              "cidade": {
+                "type": "string",
+                "example": "Campina Grande"
+              },
+              "uf": {
+                "type": "string",
+                "example": "PB"
+              }
+            },
+            "required": [
+              "logradouro",
+              "numero",
+              "bairro",
+              "cidade",
+              "uf"
+            ]
+          },
+          "isEntrega": {
+            "type": "boolean",
+            "example": true
+          },
+          "formaPagamento": {
+            "type": "object",
+            "properties": {
+              "descricao": {
+                "type": "string",
+                "example": "Pix"
+              }
+            }
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "produto": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Bolo de Chocolate"
+                    }
+                  }
+                },
+                "qtde": {
+                  "type": "number",
+                  "example": 1
+                },
+                "observacao": {
+                  "type": "string",
+                  "example": "Sem granulado"
+                }
+              },
+              "required": [
+                "produto",
+                "qtde"
+              ]
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pendente"
+            ]
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Entregar após às 15h"
+          }
+        },
+        "required": [
+          "cliente",
+          "isEntrega",
+          "formaPagamento",
+          "items"
+        ]
+      },
+      "updateOrderStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "pendente",
+              "em_preparo",
+              "pronto",
+              "entregue",
+              "cancelado"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    },
+    "parameters": {
+      "dataInicio": {
+        "name": "dataInicio",
+        "in": "query",
+        "description": "Data de início do filtro no formato YYYY-MM-DD",
+        "schema": {
+          "type": "date"
+        }
+      },
+      "dataFim": {
+        "name": "dataFim",
+        "in": "query",
+        "description": "Data de fim do filtro no formato YYYY-MM-DD",
+        "schema": {
+          "type": "date"
+        }
+      },
+      "orderStatus": {
+        "name": "status",
+        "in": "query",
+        "description": "Status do pedido",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "pendente",
+            "em_preparo",
+            "pronto",
+            "entregue",
+            "cancelado"
+          ]
+        }
+      }
+    }
+  }
+}
