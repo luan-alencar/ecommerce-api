@@ -2,7 +2,7 @@ import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import dayjs from "dayjs";
 import { OrderItem, orderItemConverter } from "../models/order-item.model.js";
 import { NotFoundError } from "../errors/not-found.error.js";
-import { Order, orderConverter, OrderStatus, QueryParamsOrder } from "../models/order-model.js";
+import { Order, orderConverter, OrderStatus, QueryParamsOrder } from "../models/order.model.js";
 import { MESSAGES } from "../constants/messages.js";
 
 export class OrderRepository {

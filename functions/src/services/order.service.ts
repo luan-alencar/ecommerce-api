@@ -1,7 +1,7 @@
 import { MESSAGES } from "../constants/messages.js";
 import { NotFoundError } from "../errors/not-found.error.js";
 import { OrderItem } from "../models/order-item.model.js";
-import { Order, QueryParamsOrder, OrderStatus } from "../models/order-model.js";
+import { Order, QueryParamsOrder, OrderStatus } from "../models/order.model.js";
 import { CompanyRepository } from "../repositories/company.repository.js";
 import { OrderRepository } from "../repositories/order.repository.js";
 import { PaymentMethodRepository } from "../repositories/payment-method.repository.js";

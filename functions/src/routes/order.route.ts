@@ -2,7 +2,7 @@ import { celebrate, Segments } from "celebrate";
 import { Router } from "express";
 import expressAsyncHandler from "express-async-handler";
 import { OrdersController } from "../controllers/order.controller.js";
-import { newOrderSchema, changeStatusOrderSchema, searchOrderQuerySchema } from "../models/order-model.js";
+import { newOrderSchema, changeStatusOrderSchema, searchOrderQuerySchema } from "../models/order.model.js";
 
 export const orderRoutes = Router();
 

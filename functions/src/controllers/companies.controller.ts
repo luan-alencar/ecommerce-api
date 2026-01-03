@@ -1,31 +1,64 @@
 import { Request, Response } from "express";
-import { CompanyService } from "../services/companies.service.js";
 import { Company } from "../models/company.model.js";
-import { MESSAGES } from "../constants/messages.js";
+import { CompanyService } from "../services/companies.service.js";
 
 export class CompaniesController {
     static async getAll(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+        // #swagger.summary = 'Obtenha todas as empresas cadastradas'
+        // #swagger.description = 'Obtenha todas as empresas cadastradas.'
         res.send(await new CompanyService().getAll());
     }
 
     static async getById(req: Request, res: Response) {
-        const companyID = req.params.id;
-        res.send(await new CompanyService().getById(companyID));
+        // #swagger.tags = ['Companies']
+        // #swagger.summary = 'Busque uma empresa pelo id'
+        // #swagger.description = 'Obtenha uma empresa pelo id.'
+        const companyId = req.params.id;
+        res.send(await new CompanyService().getById(companyId));
     }
 
     static async save(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+        // #swagger.summary = 'Crie uma nova empresa'
+        // #swagger.description = 'Crie uma nova empresa.'
+        /* #swagger.requestBody = {
+                required: true,
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/components/schemas/addCompany"
+                        }  
+                    }
+                }
+            }
+        */
         await new CompanyService().save(req.body);
         res.status(201).send({
-            message: MESSAGES.COMMON.CREATED
+            message: `Empresa criada com sucesso!`
         });
     }
 
     static async update(req: Request, res: Response) {
-        const companyID = req.params.id;
+        // #swagger.tags = ['Companies']
+        // #swagger.summary = 'Atualize os dados da empresa'
+        // #swagger.description = 'Atualize os dados de uma empresa específica.'
+        /* #swagger.requestBody = {
+                required: true,
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/components/schemas/updateCompany"
+                        }  
+                    }
+                }
+            }
+        */
+        const companyId = req.params.id;
         const company = req.body as Company;
-        await new CompanyService().update(companyID, company);
+        await new CompanyService().update(companyId, company);
         res.send({
-            message: MESSAGES.COMMON.UPDATED
+            message: "Empresa alterada com sucesso!"
         });
     }
 
