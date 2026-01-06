@@ -1,6 +1,6 @@
-import { Express, NextFunction, Request, Response } from "express";
+import { Express, Request, Response, NextFunction } from "express";
 import swaggerUi from "swagger-ui-express";
-import swaggerFile from "./../docs/swagger-output.json" with {type: "json"};
+import swaggerFile from "./../docs/swagger-output.json";
 
 export const swaggerDocs = (app: Express) => {
     app.use((req: Request, res: Response, next: NextFunction) => {
@@ -9,5 +9,6 @@ export const swaggerDocs = (app: Express) => {
         }
         next();
     });
+
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-}
+};

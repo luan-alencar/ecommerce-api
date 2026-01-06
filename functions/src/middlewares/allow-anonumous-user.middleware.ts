@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { ForbiddenError } from "../errors/forbidden.error.js";
-import { MESSAGES } from "../constants/messages.js";
 
 export const allowAnonymousUser = (req: Request, res: Response, next: NextFunction) => {
     if (req.user) {
@@ -22,5 +21,5 @@ export const allowAnonymousUser = (req: Request, res: Response, next: NextFuncti
         }
     }
 
-    next(new ForbiddenError(MESSAGES.AUTH.INVALID_UNAUTHORIZED_RESOURCE));
+    next(new ForbiddenError("Você não possui permissão para acessar esse recurso!"));
 }
